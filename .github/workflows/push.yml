@@ -11,10 +11,12 @@ jobs:
       - uses: actions/setup-python@v1
         with:
           python-version: '3.x'
+      - run: python --version --version
       - run: pip install panda3d
         continue-on-error: true
       - uses: actions/setup-python@v1
         with:
           python-version: '2.x'
+      - run: python --version --version
       - run: pip install panda3d
         continue-on-error: true
