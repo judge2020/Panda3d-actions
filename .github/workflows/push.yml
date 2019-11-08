@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@v1
       - name: Install dependencies (Ubuntu)
         run: |
-          sudo apt-get install build-essential bison flex libfreetype6-dev libgl1-mesa-dev libjpeg-dev libode-dev libopenal-dev libpng-dev libssl-dev libvorbis-dev libx11-dev libxcursor-dev libxrandr-dev nvidia-cg-toolkit zlib1g-dev
+          sudo apt-get install patchelf build-essential bison flex libfreetype6-dev libgl1-mesa-dev libjpeg-dev libode-dev libopenal-dev libpng-dev libssl-dev libvorbis-dev libx11-dev libxcursor-dev libxrandr-dev nvidia-cg-toolkit zlib1g-dev
       - uses: actions/setup-python@v1
         with:
           python-version: '3.x'
