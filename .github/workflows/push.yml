@@ -19,6 +19,8 @@ jobs:
           git clone https://github.com/panda3d/panda3d py3
           cd py3
           python makepanda/makepanda.py --outputdir=built --everything --no-eigen --python-incdir=$pythonLocation/include --python-libdir=$pythonLocation/lib --verbose --threads=4 --wheel
+          mkdir wheel
+          cp panda3d-*.whl wheel/
         continue-on-error: true
       - uses: actions/setup-python@v1
         with:
@@ -28,7 +30,17 @@ jobs:
           git clone https://github.com/panda3d/panda3d py2
           cd py2
           python makepanda/makepanda.py --outputdir=built --everything --no-eigen --python-incdir=$pythonLocation/include --python-libdir=$pythonLocation/lib --verbose --threads=4 --wheel
+          mkdir wheel
+          cp panda3d-*.whl wheel/
         continue-on-error: true
+      - uses: actions/upload-artifact@master
+        with:
+          name: py2-wheel
+          path: py2/wheel
+      - uses: actions/upload-artifact@master
+        with:
+          name: py3-wheel
+          path: py3/wheel
       - uses: actions/upload-artifact@master
         with:
           name: py2-built
