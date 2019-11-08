@@ -4,19 +4,36 @@ jobs:
   install:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v1
+      - name: Install dependencies (Ubuntu)
+        run: |
+          sudo apt-get install build-essential bison flex libfreetype6-dev libgl1-mesa-dev libjpeg-dev libode-dev libopenal-dev libpng-dev libssl-dev libvorbis-dev libx11-dev libxcursor-dev libxrandr-dev nvidia-cg-toolkit zlib1g-dev
       - uses: actions/setup-python@v1
         with:
           python-version: '3.x'
       - run: python --version --version && echo $pythonLocation
-      - run: pip install panda3d
+      - run: |
+          git clone https://github.com/panda3d/panda3d py3
+          cd py3
+          python makepanda/makepanda.py --outputdir=built --everything --no-eigen --python-incdir=$pythonLocation/include --python-libdir=$pythonLocation/lib --verbose --threads=4 --wheel
         continue-on-error: true
       - uses: actions/setup-python@v1
         with:
           python-version: '2.x'
       - run: python --version --version && echo $pythonLocation
-      - run: pip install panda3d
+      - run: |
+          git clone https://github.com/panda3d/panda3d py2
+          cd py2
+          python makepanda/makepanda.py --outputdir=built --everything --no-eigen --python-incdir=$pythonLocation/include --python-libdir=$pythonLocation/lib --verbose --threads=4 --wheel
         continue-on-error: true
+      - uses: actions/upload-artifact@master
+        with:
+          name: py2-built
+          path: py2/built
+      - uses: actions/upload-artifact@master
+        with:
+          name: py3-built
+          path: py3/built
