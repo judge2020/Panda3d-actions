@@ -16,7 +16,7 @@ jobs:
           python-version: '3.x'
       - run: python --version --version && echo $pythonLocation
       - run: |
-          git clone https://github.com/panda3d/panda3d py3
+          git clone --branch release/1.10.x https://github.com/panda3d/panda3d py3
           cd py3
           python makepanda/makepanda.py --outputdir=built --everything --no-eigen --python-incdir=$pythonLocation/include --python-libdir=$pythonLocation/lib --verbose --threads=4 --wheel
           mkdir wheel
@@ -27,7 +27,7 @@ jobs:
           python-version: '2.x'
       - run: python --version --version && echo $pythonLocation
       - run: |
-          git clone https://github.com/panda3d/panda3d py2
+          git clone --branch release/1.10.x https://github.com/panda3d/panda3d py2
           cd py2
           python makepanda/makepanda.py --outputdir=built --everything --no-eigen --python-incdir=$pythonLocation/include --python-libdir=$pythonLocation/lib --verbose --threads=4 --wheel
           mkdir wheel
