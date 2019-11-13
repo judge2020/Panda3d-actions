@@ -1,0 +1,23 @@
+name: astron docker
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: Azure/docker-login@v1
+      with:
+        username: judge2020
+        password: ${{ secrets.GITHUB_TOKEN }}
+        loginServer: docker.pkg.github.com
+    - name: Build the Docker image
+      run: |
+        cd astron
+        git clone https://github.com/astron/panda3d tmp_repo 
+        docker build . --file Dockerfile --tag astron:latest
+    - name: push to GPR
+      run: |
+        docker tag astron:latest docker.pkg.github.com/judge2020/panda3d-actions/panda-astron:latest
+        docker tag astron:latest docker.pkg.github.com/judge2020/panda3d-actions/panda-astron:$(date +%s)
+        docker push docker.pkg.github.com/judge2020/panda3d-actions/panda-astron
