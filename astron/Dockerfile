@@ -11,7 +11,7 @@ RUN echo "deb http://azure.archive.ubuntu.com/ubuntu/ bionic main restricted uni
     echo "deb http://azure.archive.ubuntu.com/ubuntu/ bionic-updates main restricted universe multiverse" >> /etc/apt/sources.list && \
     echo "deb http://azure.archive.ubuntu.com/ubuntu/ bionic-security main restricted universe multiverse" >> /etc/apt/sources.list
 
-RUN apt-get update && apt-get install -y locales > /dev/null
+RUN apt-get update && apt-get install -y locales apt-utils software-properties-common > /dev/null
 
 RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
     dpkg-reconfigure --frontend=noninteractive locales && \
@@ -19,7 +19,6 @@ RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
 
 ENV LANG en_US.UTF-8 
 
-RUN apt-get update && apt-get install -y software-properties-common > /dev/null
 RUN add-apt-repository ppa:jonathonf/python-2.7
 RUN apt-get update && apt-get install -y \
   bison \
@@ -50,6 +49,7 @@ RUN apt-get update && apt-get install -y \
   python-setuptools \
   tzdata \
   zlib1g-dev \
+  python-pip \
   > /dev/null
 
 RUN python -m pip install sentry-sdk faulthandler requests pymongo pyyaml semidbm six pytest pycurl pycrypto ddtrace
