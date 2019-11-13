@@ -1,4 +1,4 @@
-on: push
+on: page_build
 name: Install panda3d via pip
 jobs:
   install:
