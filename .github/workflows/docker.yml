@@ -6,11 +6,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - uses: Azure/docker-login@v1
-      with:
-        username: judge2020
-        password: ${{ secrets.GITHUB_TOKEN }}
-        loginServer: docker.pkg.github.com
+    - run: |
+        docker login docker.pkg.github.com --username judge2020 --password $TOKEN
+      env:
+        TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Build the Docker image
       run: |
         cd astron
